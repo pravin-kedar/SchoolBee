@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+/* SchoolBee brand tokens — sampled from doc/school-bee-doc/0. home-page.png */
+@theme {
+  --font-sans: "Nunito", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-hand: "Caveat", cursive;
+
+  --color-ink: #13214f;        /* headings, "School" in logo */
+  --color-body: #4b5470;       /* paragraph text */
+  --color-muted: #7c849c;
+  --color-brand: #1766e8;      /* primary buttons, links */
+  --color-brand-dark: #0f52c4;
+  --color-honey: #ffc229;      /* "Bee", highlights */
+  --color-amber: #f59e0b;      /* "One Simple App", section eyebrows */
+  --color-cream: #fffaf0;
+  --color-leaf: #22b35e;       /* checkmarks */
+  --color-line: #e7eaf3;
+
+  --shadow-card: 0 6px 24px -8px rgb(19 33 79 / 0.12);
+  --shadow-float: 0 18px 50px -18px rgb(19 33 79 / 0.28);
+
+  --animate-float: float 5s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-white font-sans text-body antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display text-ink;
+  }
+}
+
+@utility container-sb {
+  @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 2xl:max-w-7xl;
+}
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold transition
+    focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand;
+}
+@utility btn-primary {
+  @apply btn bg-brand text-white shadow-[0_8px_20px_-8px_rgb(23_102_232/0.7)] hover:bg-brand-dark;
+}
+@utility btn-outline {
+  @apply btn border-2 border-brand/30 bg-white text-brand hover:border-brand;
+}
+@utility eyebrow {
+  @apply text-xs font-extrabold uppercase tracking-[0.18em] text-amber;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-float { animation: none; }
+}

@@ -1,0 +1,45 @@
+/** Icon + colour for each report / report group. */
+import {
+  AlertTriangle,
+  Award,
+  BadgePercent,
+  Cake,
+  CalendarCheck,
+  CalendarDays,
+  ChartColumn,
+  Contact,
+  FileCheck,
+  FileText,
+  FileX,
+  IndianRupee,
+  ListChecks,
+  Percent,
+  Phone,
+  Receipt,
+  School,
+  Star,
+  Table,
+  UserMinus,
+  UserPlus,
+  UserX,
+  Users,
+  Wallet,
+  type LucideIcon,
+} from 'lucide-react'
+
+export const REPORT_ICON: Record<string, LucideIcon> = {
+  users: Users, 'user-plus': UserPlus, school: School, phone: Phone, cake: Cake, 'user-x': UserX, 'calendar-check': CalendarCheck, table: Table,
+  percent: Percent, 'user-minus': UserMinus, alert: AlertTriangle, 'file-check': FileCheck, rupee: IndianRupee, chart: ChartColumn,
+  'badge-percent': BadgePercent, receipt: Receipt, star: Star, 'list-checks': ListChecks, award: Award, contact: Contact, wallet: Wallet,
+  'file-x': FileX, calendar: CalendarDays, file: FileText,
+}
+export const GROUP_TONE: Record<string, string> = {
+  Students: 'bg-sky-100 text-brand',
+  Attendance: 'bg-emerald-100 text-emerald-600',
+  Documents: 'bg-violet-100 text-violet-600',
+  Fees: 'bg-amber-100 text-amber-600',
+  Assessments: 'bg-pink-100 text-pink-600',
+  Certificates: 'bg-rose-100 text-rose-500',
+  Staff: 'bg-indigo-100 text-indigo-600',
+  Calendar: 'bg-teal-100 text-teal-600',
+}
