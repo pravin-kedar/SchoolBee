@@ -7,6 +7,7 @@ import {
   CloudUpload,
   FileText,
   Globe,
+  HeartHandshake,
   Loader2,
   Lock,
   Mail,
@@ -17,9 +18,9 @@ import {
   School,
   Settings,
   Trash2,
+  type LucideIcon,
   UserRound,
   X,
-  type LucideIcon,
 } from 'lucide-react'
 
 import schoolBand from '../assets/school-band.webp'
@@ -27,6 +28,7 @@ import { AppShell } from '../components/app/AppShell'
 import { Field, FormError } from '../components/auth/Field'
 import { TextAreaField } from '../components/students/StudentUi'
 import { Dialog } from '../components/ui/Dialog'
+import { ParentLoginSettings } from '../components/settings/ParentLoginSettings'
 import { errorMessage } from '../lib/api'
 import { PHONE_PATTERN, usePermission } from '../lib/auth'
 import { useAccessToken } from '../lib/auth-store'
@@ -34,13 +36,14 @@ import { currentAcademicYear } from '../lib/setup'
 import { WEEKDAYS, settingsApi, type AssetKind, type SchoolSettings } from '../lib/settings'
 import { formatDate } from '../lib/students'
 
-type Tab = 'school' | 'certificate' | 'documents' | 'academic' | 'system'
+type Tab = 'school' | 'certificate' | 'documents' | 'academic' | 'system' | 'parents'
 const TABS: { key: Tab; label: string; icon: LucideIcon }[] = [
   { key: 'school', label: 'School Information', icon: School },
   { key: 'certificate', label: 'Certificate Settings', icon: Award },
   { key: 'documents', label: 'Document Settings', icon: FileText },
   { key: 'academic', label: 'Academic Settings', icon: CalendarDays },
   { key: 'system', label: 'System Settings', icon: Settings },
+  { key: 'parents', label: 'Parent Login', icon: HeartHandshake },
 ]
 
 type Props = { s: SchoolSettings; onChange: (s: SchoolSettings) => void }
@@ -107,6 +110,7 @@ export function SettingsPage() {
             {tab === 'documents' && <DocumentsTab s={settings} onChange={setSettings} />}
             {tab === 'academic' && <AcademicTab s={settings} onChange={setSettings} />}
             {tab === 'system' && <SystemTab s={settings} onChange={setSettings} />}
+            {tab === 'parents' && <ParentLoginSettings />}
           </>
         )}
       </div>

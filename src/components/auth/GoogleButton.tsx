@@ -11,10 +11,10 @@ export function OrDivider() {
 }
 
 /** Full-page navigation to the backend, which redirects to Google. */
-export function GoogleButton({ label = 'Continue with Google' }: { label?: string }) {
+export function GoogleButton({ label = 'Continue with Google', href = GOOGLE_LOGIN_URL }: { label?: string; href?: string }) {
   return (
     <a
-      href={GOOGLE_LOGIN_URL}
+      href={href}
       className="flex w-full items-center justify-center gap-3 rounded-xl border border-line bg-white py-3 font-bold text-ink transition hover:bg-slate-50"
     >
       <svg viewBox="0 0 48 48" className="size-5" aria-hidden>

@@ -4,9 +4,9 @@ import {
   AtSign,
   Briefcase,
   Camera,
-  FileText,
   Check,
   Download,
+  FileText,
   Heart,
   Image as ImageIcon,
   Info,
@@ -14,14 +14,15 @@ import {
   Lock,
   Mail,
   Pencil,
+  PenLine,
   Phone,
   RotateCcw,
   Save,
   Settings,
   ShieldCheck,
   Trash2,
-  UserRound,
   type LucideIcon,
+  UserRound,
 } from 'lucide-react'
 
 import schoolBand from '../assets/school-band.webp'
@@ -112,6 +113,7 @@ export function ProfilePage() {
               {tab === 'preferences' && <PreferencesForm profile={profile} onSaved={setProfile} />}
               <div className="space-y-5">
                 <PhotoCard profile={profile} onChange={setProfile} />
+                <SignatureCard profile={profile} onChange={setProfile} />
                 <AccountCard profile={profile} />
               </div>
             </div>
@@ -509,6 +511,65 @@ function PhotoCard({ profile, onChange }: { profile: MyProfile; onChange: (p: My
           {upload.input}
         </div>
       </div>
+    </Card>
+  )
+}
+
+/** Their signature, printed above "Class Teacher" on progress reports. */
+function SignatureCard({ profile, onChange }: { profile: MyProfile; onChange: (p: MyProfile) => void }) {
+  const ref = useRef<HTMLInputElement>(null)
+  const [busy, setBusy] = useState<'upload' | 'remove' | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const run = async (kind: 'upload' | 'remove', fn: () => Promise<MyProfile>) => {
+    setBusy(kind)
+    setError(null)
+    try {
+      onChange(await fn())
+    } catch (err) {
+      setError(errorMessage(err))
+    } finally {
+      setBusy(null)
+    }
+  }
+  return (
+    <Card icon={PenLine} title="My Signature" subtitle="Printed on the progress reports of the class you teach.">
+      <div className="grid h-28 place-items-center rounded-xl bg-slate-50 ring-1 ring-line" aria-label="Signature preview">
+        {profile.signature_url ? (
+          <img src={profile.signature_url} alt="Your signature" className="max-h-24 max-w-[80%] object-contain" />
+        ) : (
+          <span className="text-sm text-muted">No signature yet</span>
+        )}
+      </div>
+      <p className="mt-3 text-xs leading-relaxed text-muted">Sign on white paper, take a clear photo, crop it close. PNG with a transparent background looks best. Max 1 MB.</p>
+      <div className="mt-3 flex flex-wrap gap-2">
+        <button onClick={() => ref.current?.click()} disabled={busy !== null} className="btn-outline py-2 text-sm">
+          {busy === 'upload' ? <Loader2 className="size-4 animate-spin" /> : <PenLine className="size-4" />} {profile.signature_url ? 'Replace signature' : 'Upload signature'}
+        </button>
+        {profile.signature_url && (
+          <button
+            onClick={() => run('remove', () => meApi.removeSignature())}
+            disabled={busy !== null}
+            className="btn bg-rose-50 py-2 text-sm text-rose-600 ring-1 ring-rose-200 hover:bg-rose-100"
+          >
+            {busy === 'remove' ? <Loader2 className="size-4 animate-spin" /> : <Trash2 className="size-4" />} Remove
+          </button>
+        )}
+      </div>
+      {error && <p className="mt-2 text-xs font-semibold text-rose-600">{error}</p>}
+      <input
+        ref={ref}
+        type="file"
+        accept="image/png,image/jpeg"
+        aria-label="Signature file"
+        className="hidden"
+        onChange={(e) => {
+          const f = e.target.files?.[0]
+          e.target.value = ''
+          if (!f) return
+          if (f.size > 1024 * 1024) return setError('Signature must be under 1 MB')
+          void run('upload', () => meApi.uploadSignature(f))
+        }}
+      />
     </Card>
   )
 }

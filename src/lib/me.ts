@@ -13,6 +13,7 @@ export interface MyProfile {
   status: string
   member_since: string
   photo_url: string | null
+  signature_url: string | null // printed on progress reports of the class they teach
   assigned_sections: string[]
   has_password: boolean
   email_notifications: boolean
@@ -43,6 +44,12 @@ export const meApi = {
     return changed(api.post('/me/photo', form))
   },
   removePhoto: () => changed(api.delete('/me/photo')),
+  uploadSignature: (file: File) => {
+    const form = new FormData()
+    form.append('file', file)
+    return changed(api.post('/me/signature', form))
+  },
+  removeSignature: () => changed(api.delete('/me/signature')),
   changePassword: (current_password: string | null, new_password: string) =>
     api.post('/me/password', { current_password, new_password }).then(() => undefined),
   preferences: (body: { email_notifications?: boolean; start_page?: StartPage }) => changed(api.patch('/me/preferences', body)),

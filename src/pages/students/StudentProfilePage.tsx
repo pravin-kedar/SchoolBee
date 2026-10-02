@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
 import {
-  Activity,
+  TrendingUp,
   Award,
   CalendarCheck,
   CalendarDays,
@@ -47,6 +47,8 @@ import { useAccessToken } from '../../lib/auth-store'
 import { useSchoolOptions } from '../../lib/schoolOptions'
 import { ageLabel, formatDate, studentsApi, type Student } from '../../lib/students'
 import { StudentAssessmentsTab } from '../../components/students/StudentAssessmentsTab'
+import { StudentProgressTab } from '../../components/students/StudentProgressTab'
+import { StudentHistory } from '../../components/progress/StudentHistory'
 
 const TABS: { key: string; label: string; icon: LucideIcon }[] = [
   { key: 'overview', label: 'Overview', icon: CalendarDays },
@@ -54,7 +56,7 @@ const TABS: { key: string; label: string; icon: LucideIcon }[] = [
   { key: 'attendance', label: 'Attendance', icon: CalendarCheck },
   { key: 'assessment', label: 'Assessment', icon: UserRound },
   { key: 'certificates', label: 'Certificates', icon: Award },
-  { key: 'activity', label: 'Activity', icon: Activity },
+  { key: 'progress', label: 'Progress', icon: TrendingUp },
 ]
 
 export function StudentProfilePage() {
@@ -244,6 +246,13 @@ export function StudentProfilePage() {
 
             {tab === 'attendance' ? (
               <StudentAttendanceTab studentId={id} />
+            ) : tab === 'progress' ? (
+              <div className="space-y-5">
+                <StudentProgressTab studentId={id} />
+                <section className="rounded-2xl bg-white p-4 shadow-card ring-1 ring-line/60 sm:p-6">
+                  <StudentHistory studentId={id} today={todayIso()} />
+                </section>
+              </div>
             ) : tab === 'assessment' ? (
               <StudentAssessmentsTab studentId={id} />
             ) : tab === 'certificates' ? (

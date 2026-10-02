@@ -50,6 +50,10 @@ import { ZapPlansPage } from './pages/zap/ZapPlansPage'
 import { ZapPaymentsPage } from './pages/zap/ZapPaymentsPage'
 import { SchoolGate } from './components/license/LicenseGate'
 import { ChoosePlanPage } from './pages/ChoosePlanPage'
+import { ParentChildPage, ParentCompletePage, ParentHomePage, ParentLoginPage, ParentPasswordPage, ParentReportPage } from './pages/parent/ParentPortal'
+import { ProgressPage } from './pages/progress/ProgressPage'
+import { ActivityPage } from './pages/progress/ActivityPage'
+import { ReportPage } from './pages/progress/ReportPage'
 import { ZapTemplatesPage } from './pages/zap/ZapTemplatesPage'
 import { ZapTemplateEditorPage } from './pages/zap/ZapTemplateEditorPage'
 
@@ -65,6 +69,13 @@ export default function App() {
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/auth/google/complete" element={<GoogleCompletePage />} />
       <Route path="/choose-plan" element={<ChoosePlanPage />} />
+      {/* Parent portal: Google sign-in by the email on the child's record (separate from staff logins) */}
+      <Route path="/parent" element={<ParentHomePage />} />
+      <Route path="/parent/login" element={<ParentLoginPage />} />
+      <Route path="/parent/complete" element={<ParentCompletePage />} />
+      <Route path="/parent/password" element={<ParentPasswordPage />} />
+      <Route path="/parent/child/:id" element={<ParentChildPage />} />
+      <Route path="/parent/child/:id/report/:rid" element={<ParentReportPage />} />
       {/* School pages: shown only while the school has a usable licence (else its Plan page / a notice) */}
       <Route element={<SchoolGate />}>
         <Route path="/dashboard" element={<DashboardPage />} />
@@ -82,6 +93,9 @@ export default function App() {
         <Route path="/fees/charges/new" element={<NewChargePage />} />
         <Route path="/fees/charges/:id" element={<ChargeDetailPage />} />
         <Route path="/calendar" element={<CalendarPage />} />
+        <Route path="/progress" element={<ProgressPage />} />
+        <Route path="/progress/activities/:id" element={<ActivityPage />} />
+        <Route path="/progress/reports/:id" element={<ReportPage />} />
         <Route path="/plan" element={<PlanPage />} />
         <Route path="/reports" element={<ReportsPage />} />
         <Route path="/reports/:key" element={<ReportViewPage />} />

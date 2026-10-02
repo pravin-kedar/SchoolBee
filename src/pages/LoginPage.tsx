@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom'
-import { ArrowRight, Mail } from 'lucide-react'
+import { ArrowRight, HeartHandshake, Mail } from 'lucide-react'
 
 import { AuthLayout } from '../components/auth/AuthLayout'
 import { Field, FormError, PasswordField } from '../components/auth/Field'
@@ -117,6 +117,12 @@ export function LoginPage() {
           Sign up
         </Link>
       </p>
+      <Link
+        to="/parent/login"
+        className="mt-4 flex items-center justify-center gap-2 rounded-xl bg-amber-50 px-4 py-3 text-sm font-bold text-amber-900 ring-1 ring-amber-200 hover:bg-amber-100"
+      >
+        <HeartHandshake className="size-4" /> Parent login — see your child’s progress
+      </Link>
     </AuthLayout>
   )
 }
